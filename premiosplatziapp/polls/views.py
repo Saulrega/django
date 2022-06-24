@@ -1,4 +1,3 @@
-from msilib.schema import Class
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
@@ -32,7 +31,7 @@ class IndexView(generic.ListView):
 
    def get_queryset(self):
       """ Return the last five published questions"""
-      return Question.objects.order_by("-pub_date")[:5]
+      return Question.objects.all()
 
 class DetailView(generic.DetailView):
    model = Question
@@ -44,7 +43,7 @@ class ResultView(generic.DetailView):
    template_name = 'polls/results.html'
 
 
-def vote(request, question_id):
+def votes(request, question_id):
    question = get_object_or_404(Question, pk=question_id)
    try:
       selected_choice = question.choice_ser.get(pk=request.POST['choice'])
